@@ -11,7 +11,7 @@ namespace MvcExtensionsCore
     using System.Collections.Generic;
     using System.Linq.Expressions;
     using JetBrains.Annotations;
-    using Microsoft.AspNetCore.Mvc.ViewFeatures.Internal;
+    using MvcExtensionsCore.ModelMetadata;
 
     /// <summary>
     /// Defines a base class that is used to configure metadata of a model fluently.

@@ -135,10 +135,16 @@
             IModelMetadataRegistry registry = new ModelMetadataRegistry();
             services.AddSingleton(registry);
 
-            var classes = ConfigurationsScanner
-                .GetMetadataClasses(assemblies)
-                .Select(s => (IModelMetadataConfiguration)Activator.CreateInstance(s.MetadataConfigurationType))
-                .Where(t => t != null);
+            var serviceProvider = services.BuildServiceProvider();
+            var classes = serviceProvider.GetServices<IModelMetadataConfiguration>();
+
+            if (!classes.Any())
+            {
+                classes = ConfigurationsScanner
+                    .GetMetadataClasses(assemblies)
+                    .Select(s => (IModelMetadataConfiguration)Activator.CreateInstance(s.MetadataConfigurationType))
+                    .Where(t => t != null);
+            }
 
             var configurations = classes;
             foreach (var configuration in configurations)
